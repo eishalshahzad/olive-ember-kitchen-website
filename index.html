@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Olive &amp; Ember Kitchen — Restaurant &amp; Grill</title>
+<meta name="description" content="Olive & Ember Kitchen — wood-fired dishes, fresh ingredients, and easy online table booking.">
+<meta name="color-scheme" content="light">
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#fff6ec;
+    --bg-soft:#ffedd9;
+    --card:#ffffff;
+    --cream:#0f1115;
+    --muted:#5d5a53;
+    --accent:#e5311e;
+    --accent-dark:#c22413;
+    --border:rgba(15,17,21,.12);
+    --ink:#ffffff;
+    --radius:18px;
+    --shadow:0 12px 32px rgba(120,62,20,.09);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth;scroll-padding-top:84px}
+  body{background:var(--bg);color:var(--cream);font-family:'DM Sans',Arial,sans-serif;line-height:1.6;overflow-x:hidden}
+  img{display:block;max-width:100%}
+  a{color:inherit;text-decoration:none}
+  h1,h2,h3{font-family:'Playfair Display',serif;line-height:1.15}
+  .wrap{width:min(1180px,92%);margin:0 auto}
+  .eyebrow{display:inline-block;color:var(--accent);font-size:12px;font-weight:700;letter-spacing:3px;text-transform:uppercase;margin-bottom:12px}
+  .section{padding:88px 0}
+  .section-head{max-width:640px;margin-bottom:42px}
+  .section-head h2{font-size:clamp(30px,4vw,44px);margin-bottom:10px}
+  .section-head p{color:var(--muted)}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 28px;border-radius:999px;border:none;cursor:pointer;font-family:inherit;font-size:15px;font-weight:600;transition:.25s}
+  .btn-gold{background:var(--accent);color:var(--ink);box-shadow:0 10px 24px rgba(229,49,30,.28)}
+  .btn-gold:hover{background:var(--accent-dark);transform:translateY(-2px)}
+  .btn-ghost{background:#ffffff;color:var(--cream);border:1px solid var(--border)}
+  .btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
+
+  /* NAVBAR */
+  .navbar{position:sticky;top:0;z-index:100;background:rgba(255,246,236,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:16px 0;gap:16px}
+  .logo{font-family:'Playfair Display',serif;font-size:24px;font-weight:800;letter-spacing:.5px}
+  .logo span{color:var(--accent)}
+  .nav-links{display:flex;align-items:center;gap:30px}
+  .nav-links a{font-size:15px;font-weight:500;color:var(--muted);transition:.2s}
+  .nav-links a:hover{color:var(--cream)}
+  .nav-links .btn{padding:11px 22px;color:var(--ink)}
+  .nav-links .btn:hover{color:var(--ink)}
+  .hamburger{display:none;background:none;border:none;cursor:pointer;padding:6px}
+  .hamburger span{display:block;width:26px;height:2px;background:var(--cream);margin:6px 0;transition:.3s}
+
+  /* HERO */
+  .hero{position:relative;padding:72px 0 84px;background:radial-gradient(900px 520px at 88% 18%,#ffe3c2 0%,rgba(255,227,194,0) 60%),var(--bg);overflow:hidden}
+  .hero-watermark{position:absolute;top:50%;left:46%;transform:translate(-50%,-50%);font-family:'Playfair Display',serif;font-weight:800;font-size:clamp(120px,22vw,300px);letter-spacing:.02em;color:rgba(15,17,21,.045);white-space:nowrap;pointer-events:none;user-select:none;line-height:1}
+  .hero-grid{position:relative;display:grid;grid-template-columns:1.02fr .98fr;gap:48px;align-items:center}
+  .hero-copy .eyebrow{color:var(--accent)}
+  .hero h1{font-size:clamp(42px,5.6vw,68px);max-width:560px;margin-bottom:18px;font-weight:800}
+  .hero h1 em{color:var(--accent);font-style:normal}
+  .hero p{color:var(--muted);font-size:clamp(16px,1.8vw,19px);max-width:480px;margin-bottom:32px}
+  .hero-btns{display:flex;gap:14px;flex-wrap:wrap}
+  .hero-visual{position:relative;display:flex;justify-content:center}
+  .hero-circle{width:min(440px,86vw);aspect-ratio:1/1;border-radius:50%;overflow:hidden;border:10px solid #ffffff;box-shadow:0 30px 60px rgba(120,62,20,.22);background:#ffffff}
+  .hero-circle img{width:100%;height:100%;object-fit:cover}
+  .chip{position:absolute;display:flex;align-items:center;gap:10px;background:#ffffff;border-radius:14px;box-shadow:0 14px 30px rgba(15,17,21,.13);padding:11px 15px;font-size:13.5px;line-height:1.35;color:var(--muted);max-width:230px}
+  .chip strong{display:block;color:var(--cream);font-size:14.5px}
+  .chip .chip-dot{flex:none;width:32px;height:32px;border-radius:9px;background:#ffe9e4;color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:15px}
+  .chip-top{top:9%;left:-6px}
+  .chip-mid{top:44%;right:-14px}
+  .chip-bottom{bottom:6%;left:6px}
+  .chip-bottom .chip-dot{background:#fff3d6;color:#d98a00}
+
+  /* ABOUT */
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:54px;align-items:center}
+  .about-img{border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);box-shadow:var(--shadow)}
+  .about-img img{width:100%;height:100%;object-fit:cover;min-height:340px}
+  .about-text h2{font-size:clamp(30px,4vw,42px);margin-bottom:16px}
+  .about-text p{color:var(--muted);margin-bottom:16px}
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:34px}
+  .stat{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px 10px;text-align:center;box-shadow:var(--shadow)}
+  .stat strong{display:block;font-family:'Playfair Display',serif;font-size:26px;color:var(--accent)}
+  .stat small{color:var(--muted);font-size:12px;letter-spacing:.4px}
+
+  /* MENU */
+  .menu-section{background:var(--bg-soft)}
+  .menu-tabs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:34px}
+  .menu-tab{padding:11px 22px;border-radius:999px;border:1px solid var(--border);background:#ffffff;color:var(--muted);font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;transition:.2s}
+  .menu-tab:hover{color:var(--accent);border-color:var(--accent)}
+  .menu-tab.active{background:var(--accent);border-color:var(--accent);color:var(--ink);box-shadow:0 8px 20px rgba(229,49,30,.25)}
+  .menu-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px 40px}
+  .menu-item{display:flex;justify-content:space-between;gap:18px;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px 20px;box-shadow:var(--shadow)}
+  .menu-item h3{font-size:19px;margin-bottom:4px}
+  .menu-item p{color:var(--muted);font-size:14px}
+  .menu-item .tag{display:inline-block;margin-top:8px;font-size:11px;font-weight:700;letter-spacing:1px;color:var(--accent);border:1px solid var(--accent);border-radius:999px;padding:2px 9px}
+  .menu-price{font-family:'Playfair Display',serif;font-size:21px;color:var(--accent);white-space:nowrap}
+
+  /* GALLERY */
+  .gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .gallery-grid figure{border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);height:230px;box-shadow:var(--shadow)}
+  .gallery-grid img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+  .gallery-grid figure:hover img{transform:scale(1.07)}
+
+  /* BOOKING */
+  .booking-section{background:var(--bg-soft)}
+  .booking-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:34px;align-items:start}
+  .booking-form,.my-bookings{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:30px;box-shadow:var(--shadow)}
+  .booking-form h3,.my-bookings h3{font-size:24px;margin-bottom:20px}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .field{margin-bottom:14px}
+  .field label{display:block;font-size:13px;font-weight:600;color:var(--muted);margin-bottom:7px}
+  .field input,.field select,.field textarea{width:100%;background:#fff9f0;border:1px solid var(--border);border-radius:11px;padding:12px 14px;color:var(--cream);font-family:inherit;font-size:15px;outline:none;transition:border-color .2s}
+  .field input:focus,.field select:focus,.field textarea:focus{border-color:var(--accent)}
+  .field select option{background:#ffffff}
+  .error{color:#c22413;font-size:12.5px;margin-top:5px;display:none}
+  .error.show{display:block}
+  .confirmation{display:none;margin-top:18px;background:#fff1e6;border:1px dashed var(--accent);border-radius:14px;padding:18px}
+  .confirmation.show{display:block}
+  .confirmation h4{color:var(--accent-dark);margin-bottom:8px;font-size:17px}
+  .confirmation p{font-size:14.5px;color:var(--muted)}
+  .confirmation strong{color:var(--cream)}
+  .booking-item{border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin-bottom:12px;background:#fff9f0}
+  .booking-item h4{font-size:16px;margin-bottom:3px}
+  .booking-item p{color:var(--muted);font-size:13.5px}
+  .booking-item .ref{color:var(--accent);font-weight:700;font-size:12px;letter-spacing:1px}
+  .cancel-btn{margin-top:9px;background:none;border:1px solid var(--border);color:#c22413;border-radius:8px;padding:6px 13px;font-family:inherit;font-size:12.5px;font-weight:600;cursor:pointer}
+  .cancel-btn:hover{border-color:#c22413}
+  .empty-note{color:var(--muted);font-size:14.5px}
+
+  /* REVIEWS */
+  .reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .review{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow)}
+  .stars{color:var(--accent);letter-spacing:3px;font-size:16px;margin-bottom:14px}
+  .review p{color:var(--muted);margin-bottom:18px;font-size:15px}
+  .reviewer{display:flex;align-items:center;gap:12px}
+  .avatar{width:44px;height:44px;border-radius:50%;background:var(--accent);color:var(--ink);display:flex;align-items:center;justify-content:center;font-weight:800;font-family:'Playfair Display',serif}
+  .reviewer strong{display:block;font-size:15px}
+  .reviewer small{color:var(--muted)}
+
+  /* CONTACT */
+  .contact-section{background:var(--bg-soft)}
+  .contact-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:34px;align-items:start}
+  .contact-info h3{font-size:24px;margin-bottom:18px}
+  .info-line{margin-bottom:18px}
+  .info-line strong{display:block;color:var(--accent);font-size:12.5px;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px}
+  .info-line p{color:var(--muted)}
+  .form-success{display:none;margin-top:14px;color:#1d7a3a;font-size:14.5px}
+  .form-success.show{display:block}
+
+  /* FOOTER */
+  footer{border-top:1px solid var(--border);padding:44px 0 30px;text-align:center}
+  footer .logo{margin-bottom:10px}
+  footer p{color:var(--muted);font-size:14px}
+  footer small{display:block;margin-top:14px;color:#8a867e;font-size:12.5px}
+
+  /* WHATSAPP FLOAT */
+  .wa-float{position:fixed;right:20px;bottom:20px;z-index:120;width:56px;height:56px;border-radius:50%;background:#25d366;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 26px rgba(0,0,0,.45);transition:.25s}
+  .wa-float:hover{transform:translateY(-3px)}
+  .wa-float svg{width:29px;height:29px;fill:#fff}
+
+  /* REVEAL ANIMATION */
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.visible{opacity:1;transform:none}
+  @media (prefers-reduced-motion: reduce){
+    .reveal{opacity:1;transform:none;transition:none}
+    html{scroll-behavior:auto}
+  }
+
+  /* RESPONSIVE */
+  @media(max-width:900px){
+    .about-grid,.booking-grid,.contact-grid{grid-template-columns:1fr}
+    .menu-grid{grid-template-columns:1fr}
+    .reviews-grid{grid-template-columns:1fr}
+    .gallery-grid{grid-template-columns:repeat(2,1fr)}
+    .stats{grid-template-columns:repeat(2,1fr)}
+    .hero-grid{grid-template-columns:1fr;gap:56px}
+    .hero-copy{text-align:center}
+    .hero-copy h1,.hero-copy p{margin-left:auto;margin-right:auto}
+    .hero-btns{justify-content:center}
+    .hero-watermark{left:50%}
+    .chip-top{left:0}
+    .chip-mid{right:0}
+  }
+  @media(max-width:640px){
+    .section{padding:62px 0}
+    .nav-links{position:absolute;top:100%;left:0;right:0;background:#fff3e2;flex-direction:column;align-items:flex-start;padding:20px 5%;gap:18px;border-bottom:1px solid var(--border);display:none}
+    .nav-links.open{display:flex}
+    .hamburger{display:block}
+    .form-row{grid-template-columns:1fr}
+    .gallery-grid{grid-template-columns:1fr}
+    .gallery-grid figure{height:200px}
+    .hero{padding:52px 0 64px}
+    .chip{padding:9px 12px;font-size:12.5px;max-width:190px}
+    .chip strong{font-size:13.5px}
+    .chip-top{top:2%}
+    .chip-bottom{bottom:2%}
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= NAVBAR ================= -->
+<header class="navbar">
+  <div class="wrap nav-inner">
+    <a class="logo" href="#home">Olive <span>&amp;</span> Ember</a>
+    <nav class="nav-links" id="navLinks">
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#menu">Menu</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#contact">Contact</a>
+      <a href="#booking" class="btn btn-gold">Book a Table</a>
+    </nav>
+    <button class="hamburger" id="hamburger" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="hero" id="home">
+  <span class="hero-watermark" aria-hidden="true">FOOD</span>
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <span class="eyebrow">Wood-Fired · Fresh · Since 2012</span>
+      <h1>Where Every Meal Feels Like a <em>Celebration</em></h1>
+      <p>Slow-cooked flavours, wood-fired grills and ingredients picked fresh every morning. Book your table in under a minute.</p>
+      <div class="hero-btns">
+        <a href="#booking" class="btn btn-gold">Book a Table</a>
+        <a href="#menu" class="btn btn-ghost">View Menu</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-circle">
+        <img src="images/photo-1.jpg" alt="Signature dishes served at Olive and Ember Kitchen">
+      </div>
+      <div class="chip chip-top">
+        <span class="chip-dot" aria-hidden="true">★</span>
+        <span><strong>4.9/5</strong>2,300+ reviews</span>
+      </div>
+      <div class="chip chip-mid">
+        <span class="chip-dot" aria-hidden="true">◷</span>
+        <span><strong>Open Daily</strong>11 AM to 11 PM</span>
+      </div>
+      <div class="chip chip-bottom">
+        <span class="chip-dot" aria-hidden="true">●</span>
+        <span><strong>Downtown</strong>128 Ember Street</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ABOUT ================= -->
+<section class="section" id="about">
+  <div class="wrap about-grid">
+    <div class="about-img reveal">
+      <img src="images/photo-2.jpg" alt="Fine dining plate at Olive and Ember Kitchen" loading="lazy">
+    </div>
+    <div class="about-text reveal">
+      <span class="eyebrow">Our Story</span>
+      <h2>A Small Kitchen With a Big Heart</h2>
+      <p>Olive &amp; Ember Kitchen started in 2012 as a family-run grill house with six tables and one wood-fired oven. Today we serve hundreds of guests every week — but every dish is still cooked the slow way, over real fire.</p>
+      <p>We buy vegetables, meat and seafood fresh each morning from local markets, bake our bread in-house, and never freeze anything that deserves to be fresh.</p>
+      <div class="stats">
+        <div class="stat"><strong>12+</strong><small>Years Serving</small></div>
+        <div class="stat"><strong>48</strong><small>Dishes on Menu</small></div>
+        <div class="stat"><strong>25k</strong><small>Happy Guests</small></div>
+        <div class="stat"><strong>4.9</strong><small>Average Rating</small></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= MENU ================= -->
+<section class="section menu-section" id="menu">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Our Menu</span>
+      <h2>Cooked Over Fire, Served With Love</h2>
+      <p>Pick a category to explore the menu. Prices include taxes — no surprises at the counter.</p>
+    </div>
+    <div class="menu-tabs" id="menuTabs">
+      <button class="menu-tab active" data-category="starters">Starters</button>
+      <button class="menu-tab" data-category="mains">Main Course</button>
+      <button class="menu-tab" data-category="desserts">Desserts</button>
+      <button class="menu-tab" data-category="drinks">Drinks</button>
+    </div>
+    <div class="menu-grid" id="menuGrid"></div>
+  </div>
+</section>
+
+<!-- ================= GALLERY ================= -->
+<section class="section" id="gallery">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Gallery</span>
+      <h2>A Taste of What Awaits You</h2>
+      <p>A few favourites from our kitchen and dining room.</p>
+    </div>
+    <div class="gallery-grid">
+      <figure class="reveal"><img src="images/photo-3.jpg" alt="Signature grilled plate" loading="lazy"></figure>
+      <figure class="reveal"><img src="images/photo-4.jpg" alt="Fresh garden bowl" loading="lazy"></figure>
+      <figure class="reveal"><img src="images/photo-5.jpg" alt="Wood-fired pizza" loading="lazy"></figure>
+      <figure class="reveal"><img src="images/photo-6.jpg" alt="Charcoal skewers on the grill" loading="lazy"></figure>
+      <figure class="reveal"><img src="images/photo-7.jpg" alt="Honey pancakes stack" loading="lazy"></figure>
+      <figure class="reveal"><img src="images/photo-8.jpg" alt="Chocolate dessert" loading="lazy"></figure>
+    </div>
+  </div>
+</section>
+
+<!-- ================= BOOKING ================= -->
+<section class="section booking-section" id="booking">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Reservations</span>
+      <h2>Book Your Table</h2>
+      <p>Fill the form and your table is reserved instantly. We hold every booking for 15 minutes past the reserved time.</p>
+    </div>
+    <div class="booking-grid">
+      <form class="booking-form" id="bookingForm" novalidate>
+        <h3>Reservation Details</h3>
+        <div class="form-row">
+          <div class="field">
+            <label for="bkName">Your Name</label>
+            <input type="text" id="bkName" placeholder="e.g. Sarah Khan" autocomplete="name">
+            <p class="error" id="bkNameErr">Please enter your name.</p>
+          </div>
+          <div class="field">
+            <label for="bkPhone">Phone Number</label>
+            <input type="tel" id="bkPhone" placeholder="e.g. 555 123 4567" autocomplete="tel">
+            <p class="error" id="bkPhoneErr">Please enter a valid phone number.</p>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label for="bkGuests">Guests</label>
+            <select id="bkGuests">
+              <option value="1">1 Guest</option>
+              <option value="2" selected>2 Guests</option>
+              <option value="3">3 Guests</option>
+              <option value="4">4 Guests</option>
+              <option value="5">5 Guests</option>
+              <option value="6">6 Guests</option>
+              <option value="7">7 Guests</option>
+              <option value="8">8 Guests</option>
+              <option value="9">9 Guests</option>
+              <option value="10">10 Guests (Group)</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="bkSeating">Seating</label>
+            <select id="bkSeating">
+              <option value="Indoor">Indoor</option>
+              <option value="Outdoor">Outdoor</option>
+              <option value="Window">Window Side</option>
+              <option value="Private">Private Corner</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label for="bkDate">Date</label>
+            <input type="date" id="bkDate">
+            <p class="error" id="bkDateErr">Please pick a date (today or later).</p>
+          </div>
+          <div class="field">
+            <label for="bkTime">Time</label>
+            <select id="bkTime">
+              <option value="">Select a time</option>
+              <option>12:00 PM</option>
+              <option>1:00 PM</option>
+              <option>2:00 PM</option>
+              <option>4:00 PM</option>
+              <option>6:00 PM</option>
+              <option>7:00 PM</option>
+              <option>8:00 PM</option>
+              <option>9:00 PM</option>
+              <option>10:00 PM</option>
+            </select>
+            <p class="error" id="bkTimeErr">Please select a time slot.</p>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-gold" style="width:100%">Confirm Reservation</button>
+        <div class="confirmation" id="confirmation"></div>
+      </form>
+
+      <div class="my-bookings reveal">
+        <h3>My Reservations</h3>
+        <div id="bookingList">
+          <p class="empty-note">No reservations yet. Your bookings will appear here.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= REVIEWS ================= -->
+<section class="section" id="reviews">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Guest Reviews</span>
+      <h2>What Our Guests Say</h2>
+      <p>Real words from the people who eat with us every week.</p>
+    </div>
+    <div class="reviews-grid">
+      <article class="review reveal">
+        <div class="stars">★★★★★</div>
+        <p>"The ribeye here is the best I have had outside a steakhouse. Booking online took less than a minute and our table was ready when we arrived."</p>
+        <div class="reviewer">
+          <span class="avatar">S</span>
+          <div><strong>Sophia Miller</strong><small>Food Blogger</small></div>
+        </div>
+      </article>
+      <article class="review reveal">
+        <div class="stars">★★★★★</div>
+        <p>"We celebrated our anniversary in the private corner. Staff decorated the table without us even asking. The truffle pasta is a must-try."</p>
+        <div class="reviewer">
+          <span class="avatar">D</span>
+          <div><strong>Daniel Kim</strong><small>Regular Guest</small></div>
+        </div>
+      </article>
+      <article class="review reveal">
+        <div class="stars">★★★★★</div>
+        <p>"Fresh, fast and honest prices. Their wood-fired pizza tastes like the ones I had in Naples. This is now our family's Friday night place."</p>
+        <div class="reviewer">
+          <span class="avatar">A</span>
+          <div><strong>Ayesha Rahman</strong><small>Local Resident</small></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section class="section contact-section" id="contact">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Visit Us</span>
+      <h2>Find Us &amp; Say Hello</h2>
+      <p>Walk-ins are welcome, but weekends fill fast — booking ahead is smarter.</p>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info reveal">
+        <h3>Restaurant Info</h3>
+        <div class="info-line">
+          <strong>Address</strong>
+          <p>128 Ember Street, Downtown<br>New York, NY 10001</p>
+        </div>
+        <div class="info-line">
+          <strong>Opening Hours</strong>
+          <p>Monday – Sunday<br>11:00 AM – 11:00 PM</p>
+        </div>
+        <div class="info-line">
+          <strong>Phone</strong>
+          <p>+1 (555) 123-4567</p>
+        </div>
+        <div class="info-line">
+          <strong>Email</strong>
+          <p>hello@oliveandember.com</p>
+        </div>
+      </div>
+      <form class="booking-form" id="contactForm" novalidate style="margin:0">
+        <h3>Send a Message</h3>
+        <div class="form-row">
+          <div class="field">
+            <label for="ctName">Your Name</label>
+            <input type="text" id="ctName" placeholder="Your name" autocomplete="name">
+            <p class="error" id="ctNameErr">Please enter your name.</p>
+          </div>
+          <div class="field">
+            <label for="ctEmail">Your Email</label>
+            <input type="email" id="ctEmail" placeholder="you@email.com" autocomplete="email">
+            <p class="error" id="ctEmailErr">Please enter a valid email address.</p>
+          </div>
+        </div>
+        <div class="field">
+          <label for="ctMsg">Message</label>
+          <textarea id="ctMsg" rows="4" placeholder="Ask about events, catering, large groups..."></textarea>
+          <p class="error" id="ctMsgErr">Please write a message (at least 10 characters).</p>
+        </div>
+        <button type="submit" class="btn btn-gold" style="width:100%">Send Message</button>
+        <p class="form-success" id="ctSuccess">Thank you! Your message has been sent. We usually reply within a few hours.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="wrap">
+    <div class="logo">Olive <span style="color:var(--accent)">&amp;</span> Ember</div>
+    <p>Wood-fired kitchen · 128 Ember Street, Downtown · Open daily 11 AM – 11 PM</p>
+    <small>© <span id="year"></span> Olive &amp; Ember Kitchen. All rights reserved.</small>
+  </div>
+</footer>
+
+<!-- WhatsApp floating button (demo number from the site's contact info) -->
+<a class="wa-float" href="https://wa.me/15551234567?text=Hello%20Olive%20%26%20Ember!%20I%20want%20to%20book%20a%20table." target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+  <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3C9.4 3 4 8.3 4 14.9c0 2.6.8 5 2.4 7L4.7 29l7.3-1.6c1.3.7 2.6 1 4 1 6.6 0 12-5.3 12-11.9S22.6 3 16 3zm0 21.7c-1.3 0-2.5-.3-3.6-1l-.4-.2-3.8.8.8-3.7-.3-.4a9.7 9.7 0 0 1-1.5-5.3C7.2 9.6 11.1 5.8 16 5.8S24.8 9.6 24.8 14.5 20.9 24.7 16 24.7zm5.3-7.2c-.3-.2-1.7-.9-2-1s-.5-.1-.7.2-.8 1-.9 1.2-.3.2-.6.1a7.9 7.9 0 0 1-4-3.5c-.3-.5.3-.5.7-1.6a.6.6 0 0 0 0-.6c-.1-.2-.7-1.7-1-2.3-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.2.2 2.1 3.3 5.2 4.6.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.7-.7 2-1.4.3-.7.3-1.2.2-1.4-.1-.1-.3-.2-.6-.4z"/></svg>
+</a>
+
+<script>
+// ================= MENU DATA =================
+var MENU = {
+  starters: [
+    { name: "Bruschetta al Pomodoro", desc: "Grilled sourdough, marinated tomatoes, basil oil and shaved parmesan.", price: 9 },
+    { name: "Crispy Calamari", desc: "Golden fried squid rings with garlic aioli and a squeeze of lemon.", price: 12 },
+    { name: "Burrata & Heirloom Tomato", desc: "Creamy burrata, heirloom tomatoes, pesto and aged balsamic.", price: 14, tag: "POPULAR" },
+    { name: "Roasted Tomato Soup", desc: "Slow-roasted tomatoes blended with cream, served with grilled cheese bites.", price: 8 },
+    { name: "Garlic Butter Shrimp", desc: "Prawns sizzling in garlic butter with chilli flakes and parsley.", price: 13 }
+  ],
+  mains: [
+    { name: "Grilled Ribeye Steak", desc: "300g ribeye grilled over charcoal, rosemary butter and smoked sea salt.", price: 28, tag: "CHEF'S SPECIAL" },
+    { name: "Pan-Seared Salmon", desc: "Crispy-skin salmon with lemon butter sauce and seasonal greens.", price: 24 },
+    { name: "Truffle Alfredo Pasta", desc: "Fresh fettuccine in a creamy truffle alfredo with parmesan crisps.", price: 19, tag: "POPULAR" },
+    { name: "Wood-Fired Margherita", desc: "San Marzano tomatoes, fresh mozzarella and basil from our own oven.", price: 16 },
+    { name: "Herb Roast Chicken", desc: "Half chicken marinated overnight in herbs, served with ember potatoes.", price: 21 },
+    { name: "Smoked Lamb Chops", desc: "Lamb chops with mint chimichurri and charred vegetables.", price: 27 }
+  ],
+  desserts: [
+    { name: "Classic Tiramisu", desc: "Espresso-soaked ladyfingers layered with mascarpone cream and cocoa.", price: 9, tag: "POPULAR" },
+    { name: "Chocolate Lava Cake", desc: "Warm dark chocolate cake with a molten centre and vanilla gelato.", price: 10 },
+    { name: "Basque Cheesecake", desc: "Caramelised top, creamy centre, baked fresh every morning.", price: 9 },
+    { name: "Affogato", desc: "Vanilla gelato drowned in a double shot of hot espresso.", price: 7 }
+  ],
+  drinks: [
+    { name: "Fresh Lemonade", desc: "Hand-pressed lemons, mint and a touch of honey.", price: 5 },
+    { name: "Virgin Mint Mojito", desc: "Crushed mint, lime and soda over ice — zero alcohol, full flavour.", price: 6 },
+    { name: "Cold Brew Coffee", desc: "Slow-steeped for 18 hours, served over ice.", price: 4 },
+    { name: "Berry Smoothie", desc: "Mixed berries, banana and Greek yoghurt.", price: 6 },
+    { name: "Sparkling Water", desc: "Chilled sparkling water with a slice of lime.", price: 3 }
+  ]
+};
+
+// ================= MENU TABS =================
+var menuGrid = document.getElementById("menuGrid");
+var menuTabs = document.querySelectorAll(".menu-tab");
+
+function renderMenu(category) {
+  menuGrid.innerHTML = "";
+  MENU[category].forEach(function (item) {
+    var div = document.createElement("div");
+    div.className = "menu-item";
+    div.innerHTML =
+      "<div><h3></h3><p></p>" +
+      (item.tag ? '<span class="tag">' + item.tag + "</span>" : "") +
+      '</div><span class="menu-price">$' + item.price + "</span>";
+    div.querySelector("h3").textContent = item.name;
+    div.querySelector("p").textContent = item.desc;
+    menuGrid.appendChild(div);
+  });
+}
+
+menuTabs.forEach(function (tab) {
+  tab.addEventListener("click", function () {
+    menuTabs.forEach(function (t) { t.classList.remove("active"); });
+    tab.classList.add("active");
+    renderMenu(tab.dataset.category);
+  });
+});
+renderMenu("starters");
+
+// ================= MOBILE NAV =================
+var hamburger = document.getElementById("hamburger");
+var navLinks = document.getElementById("navLinks");
+hamburger.addEventListener("click", function () {
+  navLinks.classList.toggle("open");
+});
+navLinks.querySelectorAll("a").forEach(function (link) {
+  link.addEventListener("click", function () {
+    navLinks.classList.remove("open");
+  });
+});
+
+// ================= BOOKING =================
+// Reservations live in this session only (in-memory), per this page's design.
+var reservations = [];
+var bookingForm = document.getElementById("bookingForm");
+var bookingList = document.getElementById("bookingList");
+var confirmation = document.getElementById("confirmation");
+var bkDate = document.getElementById("bkDate");
+
+// Date picker: today is the earliest selectable day
+bkDate.min = new Date().toISOString().split("T")[0];
+
+function setError(errId, bad) {
+  document.getElementById(errId).classList.toggle("show", bad);
+  return !bad;
+}
+
+function niceDate(value) {
+  var d = new Date(value + "T00:00:00");
+  return d.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric", year: "numeric" });
+}
+
+function renderBookings() {
+  bookingList.innerHTML = "";
+  if (reservations.length === 0) {
+    bookingList.innerHTML = '<p class="empty-note">No reservations yet. Your bookings will appear here.</p>';
+    return;
+  }
+  reservations.forEach(function (b) {
+    var item = document.createElement("div");
+    item.className = "booking-item";
+    item.innerHTML =
+      '<span class="ref"></span><h4></h4><p class="line1"></p><p class="line2"></p>';
+    item.querySelector(".ref").textContent = "REF: " + b.ref;
+    item.querySelector("h4").textContent = b.name + " — " + b.guests + (b.guests === "1" ? " Guest" : " Guests");
+    item.querySelector(".line1").textContent = niceDate(b.date) + " at " + b.time + " · " + b.seating + " seating";
+    item.querySelector(".line2").textContent = "Phone: " + b.phone;
+    var btn = document.createElement("button");
+    btn.className = "cancel-btn";
+    btn.textContent = "Cancel Reservation";
+    btn.addEventListener("click", function () {
+      reservations = reservations.filter(function (x) { return x.ref !== b.ref; });
+      renderBookings();
+    });
+    item.appendChild(btn);
+    bookingList.appendChild(item);
+  });
+}
+
+bookingForm.addEventListener("submit", function (e) {
+  e.preventDefault();
+  var name = document.getElementById("bkName").value.trim();
+  var phone = document.getElementById("bkPhone").value.trim();
+  var guests = document.getElementById("bkGuests").value;
+  var seating = document.getElementById("bkSeating").value;
+  var date = bkDate.value;
+  var time = document.getElementById("bkTime").value;
+
+  var ok = true;
+  ok = setError("bkNameErr", name.length < 2) && ok;
+  ok = setError("bkPhoneErr", phone.replace(/\D/g, "").length < 7) && ok;
+  ok = setError("bkDateErr", !date || date < bkDate.min) && ok;
+  ok = setError("bkTimeErr", !time) && ok;
+  if (!ok) return;
+
+  var ref = "OE-" + Math.random().toString(36).substring(2, 8).toUpperCase();
+  reservations.unshift({ ref: ref, name: name, phone: phone, guests: guests, seating: seating, date: date, time: time });
+  renderBookings();
+
+  confirmation.innerHTML =
+    "<h4>Table Reserved — See You Soon!</h4>" +
+    "<p>Booking reference: <strong></strong></p>" +
+    "<p class='c-line'></p>" +
+    "<p>A confirmation has been noted for <strong class='c-name'></strong>. Please arrive 10 minutes early.</p>";
+  confirmation.querySelector("strong").textContent = ref;
+  confirmation.querySelector(".c-line").textContent =
+    guests + (guests === "1" ? " Guest" : " Guests") + " · " + seating + " · " + niceDate(date) + " at " + time;
+  confirmation.querySelector(".c-name").textContent = name;
+  confirmation.classList.add("show");
+  bookingForm.reset();
+  bkDate.min = new Date().toISOString().split("T")[0];
+  if (confirmation.scrollIntoView) { confirmation.scrollIntoView({ behavior: "smooth", block: "center" }); }
+});
+
+renderBookings();
+
+// ================= CONTACT FORM =================
+var contactForm = document.getElementById("contactForm");
+contactForm.addEventListener("submit", function (e) {
+  e.preventDefault();
+  var name = document.getElementById("ctName").value.trim();
+  var email = document.getElementById("ctEmail").value.trim();
+  var msg = document.getElementById("ctMsg").value.trim();
+
+  var ok = true;
+  ok = setError("ctNameErr", name.length < 2) && ok;
+  ok = setError("ctEmailErr", !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) && ok;
+  ok = setError("ctMsgErr", msg.length < 10) && ok;
+  if (!ok) return;
+
+  document.getElementById("ctSuccess").classList.add("show");
+  contactForm.reset();
+});
+
+// Clear an error as soon as the user starts fixing the field
+document.querySelectorAll("input, select, textarea").forEach(function (el) {
+  el.addEventListener("input", function () {
+    var err = document.getElementById(el.id + "Err");
+    if (err) err.classList.remove("show");
+  });
+});
+
+// ================= REVEAL ON SCROLL =================
+if ("IntersectionObserver" in window) {
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll(".reveal").forEach(function (el) { observer.observe(el); });
+} else {
+  document.querySelectorAll(".reveal").forEach(function (el) { el.classList.add("visible"); });
+}
+
+// ================= FOOTER YEAR =================
+document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>
